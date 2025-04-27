@@ -1,14 +1,14 @@
 :root {
-    --color-01: #A0E8A0; /* Mint */
-    --color-02: #FFB3CC; /* Pink Blossom */
-    --color-03: #FFF19D; /* Soft Yellow */
-    --color-04: #C5A8FF; /* Lavender */
-    --color-05: #A0C8FF; /* Light Blue */
-    --color-06: #FBD0D0; /* Blush Pink */
-    --color-07: #F2D6A0; /* Soft Beige */
-    --color-08: #B8E4DF; /* Light Aqua */
-    --color-09: #D1D1D1; /* Gentle Grey */
-    --color-10: #FFB8A0; /* Peach Pastel */
+    --color-01: #A0E8A0;
+    --color-02: #FFB3CC;
+    --color-03: #FFF19D;
+    --color-04: #C5A8FF;
+    --color-05: #A0C8FF;
+    --color-06: #FBD0D0;
+    --color-info: #A1D8FF;
+    --color-success: #A0E8A0;
+    --color-warning: #FFF19D;
+    --color-error: #FFB3D9;
 }
 
 .mint:root {
@@ -69,6 +69,5 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: 'Playwrite MX Guides', serif; */
     transition: all 0.4s ease;
 }

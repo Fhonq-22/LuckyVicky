@@ -1,0 +1,44 @@
+/* notification.css */
+.notification {
+    width: 100%;
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-06);
+    padding: 4px 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 300px;
+  }
+  
+  .close-btn {
+    width: auto;
+    background: none;
+    border: none;
+    color: var(--color-06);
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0;
+  }
+  
+  .notification.success {
+    background-color: var(--color-success); /* Mint */
+  }
+  
+  .notification.error {
+    background-color: var(--color-error); /* Blush Pink */
+  }
+  
+  .notification.info {
+    background-color: var(--color-info); /* Soft Yellow */
+  }
+  
+  .notification.warning {
+    background-color: var(--color-warning); /* Pink Blossom */
+  }
+  
