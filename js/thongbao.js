@@ -29,6 +29,6 @@ export function HienThiThongBao(message, type = 'success') {
     // Tự động đóng thông báo sau 5 giây
     setTimeout(() => {
       notification.style.display = 'none';
-    }, 500000);
+    }, 5000);
   }
   

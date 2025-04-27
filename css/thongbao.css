@@ -5,7 +5,7 @@
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--color-06);
+    color: black;
     padding: 4px 8px;
     font-size: 16px;
     border-radius: 5px;
@@ -14,13 +14,15 @@
     justify-content: space-between;
     align-items: center;
     max-width: 300px;
+    border-bottom: 5px solid white;
+    animation: fadeIn 0.5s forwards;
   }
   
   .close-btn {
     width: auto;
     background: none;
     border: none;
-    color: var(--color-06);
+    color: black;
     font-size: 20px;
     cursor: pointer;
     margin: 0;
@@ -40,5 +42,37 @@
   
   .notification.warning {
     background-color: var(--color-warning); /* Pink Blossom */
+  }
+  
+
+
+  
+  .notification::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 5px;
+    background-color: var(--color-01);
+    width: 100%;
+    animation: slide 5s linear forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0;
+    }
   }
   
