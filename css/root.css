@@ -1,0 +1,74 @@
+:root {
+    --color-01: #A0E8A0; /* Mint */
+    --color-02: #FFB3CC; /* Pink Blossom */
+    --color-03: #FFF19D; /* Soft Yellow */
+    --color-04: #C5A8FF; /* Lavender */
+    --color-05: #A0C8FF; /* Light Blue */
+    --color-06: #FBD0D0; /* Blush Pink */
+    --color-07: #F2D6A0; /* Soft Beige */
+    --color-08: #B8E4DF; /* Light Aqua */
+    --color-09: #D1D1D1; /* Gentle Grey */
+    --color-10: #FFB8A0; /* Peach Pastel */
+}
+
+.mint:root {
+    --color-01: #A1E0A1;
+    --color-02: #A0D2B2;
+    --color-03: #8DC79F;
+    --color-04: #72C78F;
+    --color-05: #5FBF80;
+    --color-06: #4CA979;
+}
+
+.peach:root {
+    --color-01: #FFD380;
+    --color-02: #FFB76B;
+    --color-03: #FFA257;
+    --color-04: #FF8F6D;
+    --color-05: #FF7A61;
+    --color-06: #FF6B58;
+}
+
+.lavender:root {
+    --color-01: #D6A9FF;
+    --color-02: #C59EFF;
+    --color-03: #B28DFF;
+    --color-04: #9F7BFF;
+    --color-05: #8D61FF;
+    --color-06: #7A50FF;
+}
+
+.skyblue:root {
+    --color-01: #A1D8FF;
+    --color-02: #7BBEFF;
+    --color-03: #56AFFF;
+    --color-04: #299DFF;
+    --color-05: #108CFF;
+    --color-06: #0079E0;
+}
+
+.rose:root {
+    --color-01: #FFB3D9;
+    --color-02: #FF80B8;
+    --color-03: #FF4D9C;
+    --color-04: #FF1A82;
+    --color-05: #E6006B;
+    --color-06: #C40060;
+}
+
+.softgrey:root {
+    --color-01: #E0E0E0;
+    --color-02: #D0D0D0;
+    --color-03: #C0C0C0;
+    --color-04: #B0B0B0;
+    --color-05: #A0A0A0;
+    --color-06: #909090;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: 'Playwrite MX Guides', serif; */
+    transition: all 0.4s ease;
+}
