@@ -1,25 +1,46 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trang chủ - L.U.C.K.Y Lab</title>
-  <link rel="stylesheet" href="css/root.css">
+  <title>LUCKY Vicky's Lab</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/thongbao.css">
 </head>
 <body>
+  <header class="lab-header">
+    <h1>LUCKY Lab</h1>
+    <p>Phòng thí nghiệm của Lucky Vicky 💖</p>
+  </header>
 
-<div class="main-content">
-  <h2>Chào mừng bạn đến với L.U.C.K.Y Lab!</h2>
+  <main class="lab-main">
+    <button id="ToanManHinh"><i class='bx bx-fullscreen'></i>
+    </button>
+    <section class="lab-intro">
+      <button id="startBtn">Bắt đầu nhiệm vụ</button>
 
-  <!-- Khu vực thông báo đăng nhập -->
-  <div id="login-message"></div>
+      <!-- Nút để mở Modal chọn khu vực -->
+      <button id="showKhuVucBtn">Chọn khu vực</button>
+    </section>
+  </main>
 
-</div>
+  <!-- Modal Khu vực -->
+  <div id="modal-khuvuc" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Chọn khu vực</h2>
+      <ul id="dsKhuVuc">
+        <li><button onclick="chooseArea('')">Đang tải...</button></li>
+        <li><button onclick="chooseArea('')">Đang tải...</button></li>
+        <li><button onclick="chooseArea('')">Đang tải...</button></li>
+      </ul>
+    </div>
+  </div>
 
-<!-- Liên kết đến file JavaScript -->
-<script type="module" src="js/index.js"></script>
+  <footer class="lab-footer">
+    <p>© 2025 Lucky Vicky's Lab. Lan tỏa năng lượng tích cực ✨</p>
+  </footer>
 
+  <script type="module" src="js/index.js"></script>
 </body>
 </html>

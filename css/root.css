@@ -8,7 +8,7 @@
     --color-info: #A1D8FF;
     --color-success: #A0E8A0;
     --color-warning: #FFF19D;
-    --color-error: #FFB3D9;
+    --color-error: #D97D7D;
 }
 
 .mint:root {
@@ -70,4 +70,5 @@
     padding: 0;
     box-sizing: border-box;
     transition: all 0.4s ease;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }

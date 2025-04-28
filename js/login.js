@@ -15,7 +15,7 @@ document.querySelector('.login-form').addEventListener('submit', async function 
 
     // Kiểm tra thông tin người dùng
     if (username === "" || password === "") {
-        alert("Vui lòng điền đầy đủ thông tin!");
+        HienThiThongBao('Vui lòng điền đầy đủ thông tin!', 'warning');
         return;
     }
 
@@ -23,7 +23,7 @@ document.querySelector('.login-form').addEventListener('submit', async function 
         const userData = await layNguoiDung(username);
         if (userData) {
             if (userData.MatKhau === password) {
-                alert(`Đăng nhập thành công! Vai trò: ${userData.VaiTro}`);
+                await HienThiThongBao('Đăng nhập thành công! Vai trò: '+userData.VaiTro, 'success');
                 localStorage.setItem("username", username);
                 switch (userData.VaiTro) {
                     case "Player":
@@ -33,18 +33,17 @@ document.querySelector('.login-form').addEventListener('submit', async function 
                         kiemTraChuyenHuong("admin.html");
                         break;
                     default:
-                        alert("Vai trò không hợp lệ!");
+                        HienThiThongBao('Vai trò không hợp lệ!', 'warning');
                         break;
                 }
             } else {
-                alert("Sai mật khẩu!");
-                console.log(userData.MatKhau);
+                HienThiThongBao('Sai mật khẩu!', 'warning');
             }
         } else {
-            alert("Tài khoản không tồn tại!");
+            HienThiThongBao('Tài khoản không tồn tại!', 'warning');
         }
     } catch (error) {
-        alert("Lỗi đăng nhập: " + error.message);
+        HienThiThongBao('Lỗi đăng nhập: ' + error.message, 'error');
     }
 });
 document.querySelector('.register-form').addEventListener('submit', async function (event) {
