@@ -58,3 +58,25 @@ export class VirusXui {
         };
     }
 }
+
+
+export class NangLuong {
+    constructor(MaNL, Ten, MoTa, MauSac, Icon) {
+        this.MaNL = MaNL;  // Mã năng lượng (MaNL)
+        this.Ten = Ten;    // Tên năng lượng
+        this.MoTa = MoTa;  // Mô tả năng lượng
+        this.MauSac = MauSac; // Màu sắc
+        this.Icon = Icon; // Biểu tượng (icon)
+    }
+
+    toJSON() {
+        return {
+            MaNL: this.MaNL,
+            Ten: this.Ten,
+            MoTa: this.MoTa,
+            MauSac: this.MauSac,
+            Icon: this.Icon
+        };
+    }
+}
+

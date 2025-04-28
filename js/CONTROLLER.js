@@ -1,5 +1,5 @@
 import { addData, getData, updateData, deleteData } from "./firebase-CRUD.js";
-import { NguoiDung, KhuVuc, VirusXui } from "./MODEL.js";
+import { NguoiDung, KhuVuc, VirusXui, NangLuong } from "./MODEL.js";
 
 // #region XỬ LÝ NguoiDung
 export async function themNguoiDung(nguoiDung) {
@@ -73,5 +73,30 @@ export async function suaVirusXui(maVR, newData) {
 
 export async function xoaVirusXui(maVR) {
     await deleteData("VirusXui", maVR);
+}
+// #endregion
+
+// #region XỬ LÝ NangLuong
+export async function themNangLuong(nangLuong) {
+    await addData("NangLuong", nangLuong.MaNL, new NangLuong(...Object.values(nangLuong)).toJSON());
+}
+
+export async function layNangLuong(maNL) {
+    const data = await getData("NangLuong", maNL);
+    return data ? new NangLuong(maNL, data.Ten, data.MoTa, data.MauSac, data.Icon) : null;
+}
+
+export async function layTatCaNangLuong() {
+    const data = await getData("NangLuong", "");
+    return data ? Object.keys(data).map(key => new NangLuong(key, data[key].Ten, data[key].MoTa, data[key].MauSac, data[key].Icon)) : [];
+}
+
+export async function suaNangLuong(maNL, newData) {
+    const updatedNangLuong = new NangLuong(maNL, newData.Ten, newData.MoTa, newData.MauSac, newData.Icon);
+    await updateData("NangLuong", maNL, updatedNangLuong.toJSON());
+}
+
+export async function xoaNangLuong(maNL) {
+    await deleteData("NangLuong", maNL);
 }
 // #endregion

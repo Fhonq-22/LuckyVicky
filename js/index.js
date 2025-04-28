@@ -1,4 +1,4 @@
-import { layTatCaKhuVuc, layTatCaVirusXui } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
@@ -107,15 +107,51 @@ document.addEventListener('DOMContentLoaded', () => {
       virusBtn.addEventListener('click', async () => {
         const virusXuiList = await layTatCaVirusXui();
         const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.getAttribute('data-maVR'));
-        
+
         if (virusTimDuoc) {
           khoiTaoModal();
-          document.getElementById('virus-tinhhuong').textContent = `Tình huống: ${virusTimDuoc.TinhHuong}`;
-          document.getElementById('virus-thongdiep').textContent = `Thông điệp: ${virusTimDuoc.ThongDiepVicky}`;
+          document.getElementById('virus-mavr').textContent = `VIRUS: ${virusTimDuoc.MaVR}`;
+
+          document.querySelectorAll('#virus-mucdo .mucdo').forEach((div, index) => {
+            if (index < virusTimDuoc.MucDo) {
+              div.style.backgroundColor = 'var(--color-06)'; // Chẳng hạn là màu đỏ cho các mức độ nguy hiểm
+            } else {
+              div.style.backgroundColor = 'var(--color-01)'; // Màu xanh nhạt cho các mức độ thấp hơn
+            }
+          });
+          document.getElementById('virus-tinhhuong').innerText = `Tình huống:\n ${virusTimDuoc.TinhHuong}`;
+          document.getElementById('virus-vaccin').textContent = `Vaccin: ${virusTimDuoc.Vaccin}`;
+          const diemNangLuongList = virusTimDuoc.DiemNangLuong.split('-'); // Tách chuỗi theo dấu '-'
+          const virusDiemList = document.getElementById('virus-diemnangluong');
+          virusDiemList.innerHTML = ''; // Xóa nội dung cũ
+
+          diemNangLuongList.forEach(async diem => {
+            const [maNL, diemSo] = [diem.slice(0, 4), diem.slice(4)]; // Lấy MaNL và điểm
+            const diemItem = document.createElement('li');
+
+            const pMaNL = document.createElement('p');
+            pMaNL.textContent = `${maNL}`;
+            const nangLuong = await layNangLuong(maNL);
+            const mauSac = nangLuong.MauSac;
+            pMaNL.style.backgroundImage = `linear-gradient(to right, ${mauSac}, var(--color-03))`;
+
+            diemItem.appendChild(pMaNL);
+
+            // Tạo thẻ <p> cho điểm số (diemSo)
+            const pDiemSo = document.createElement('p');
+            pDiemSo.textContent = `+ ${diemSo}`;
+            pDiemSo.style.backgroundImage = `linear-gradient(to left, ${mauSac}, var(--color-03))`;
+            diemItem.appendChild(pDiemSo);
+
+            // Thêm item vào danh sách
+            virusDiemList.appendChild(diemItem);
+          });
+
+
           document.getElementById('modal-virus').classList.remove('hidden');
           document.getElementById('modal-virus').classList.add('show');
         }
-      });      
+      });
 
     });
   };

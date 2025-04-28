@@ -65,7 +65,7 @@ ul#dsKhuVuc {
     padding: 0;
 }
 
-#dsKhuVuc .khuvuc-item{
+#dsKhuVuc .khuvuc-item {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -75,24 +75,26 @@ ul#dsKhuVuc {
     margin-top: 8px;
 }
 
-span.khuvuc-stt{
+span.khuvuc-stt {
     font-size: 1.2rem;
 }
 
-button.khuvuc-button{
+button.khuvuc-button {
     float: right;
-    border-radius: 0;
+    border-radius: 20px 20px 0 0;
     margin-top: 0;
+    min-width: 205px;
 }
 
 p.khuvuc-diadiem,
-p.khuvuc-slvirus{
+p.khuvuc-slvirus {
     position: absolute;
     bottom: 12px;
     left: 12px;
     color: white;
 }
-p.khuvuc-diadiem{
+
+p.khuvuc-diadiem {
     bottom: calc(12px + 22px);
 }
 
@@ -113,17 +115,58 @@ img.khuvuc-anh {
     padding: 20px;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
-  }
-  
-  
-  
-  .virus-btn {
+}
+
+
+#modal-virus .modal-content{
+    transform: scale(0.8);
+}
+.virus-btn {
     position: absolute;
-    background-color: red;
+    background-color: var(--color-error);
     color: white;
     padding: 10px;
     margin-top: 0;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+}
+
+ul#virus-diemnangluong li {
+    display: flex;
+    margin: 4px;
+}
+ul#virus-diemnangluong li p:first-child,
+ul#virus-diemnangluong li p:last-child{
+    padding: 4px 8px;
+    border: 2px solid var(--color-06);
+}
+ul#virus-diemnangluong li p:first-child{
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+}
+ul#virus-diemnangluong li p:last-child{
+    border-radius: 0 12px 12px 0;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid var(--color-05);  /* Màu xanh lá */
+    width: 100%;  /* Chiều rộng của hr */
+    margin: 12px auto;  /* Căn giữa */
+}
+
+#virus-mucdo {
+    display: flex;
+    justify-content: center; /* Căn giữa các khối vuông */
+    gap: 4px;
+    margin: 10px 0;
+    
+  }
+
+.mucdo {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
   }

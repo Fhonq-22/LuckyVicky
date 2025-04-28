@@ -15,14 +15,16 @@
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 5% auto;
+  background-color: white;
   padding: 20px;
   border: 1px solid #888;
   border-radius: 12px;
   width: 80%;
   max-width: 90%;
-  min-height: 90%;
+}
+
+.modal-content h2{
+  color: var(--color-05);
 }
 
 .close-modal {
