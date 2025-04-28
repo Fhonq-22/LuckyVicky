@@ -1,4 +1,4 @@
-import { layTatCaKhuVuc } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   khoiTaoModal();
   document.getElementById('showKhuVucBtn').addEventListener('click', async () => {
-    document.getElementById('modal-khuvuc').style.display = 'block';
+    document.getElementById('modal-khuvuc').classList.remove('hidden');
+    document.getElementById('modal-khuvuc').classList.add('show');
 
     try {
       const khuVucList = await layTatCaKhuVuc();  // Lấy danh sách khu vực
@@ -43,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const sLVirus = document.createElement('p');
         sLVirus.classList.add('khuvuc-slvirus');
         sLVirus.innerHTML = `<i class='bx bxs-virus'></i>: ${khuVuc.DanhSachVirus.length}`;
-        dsVirus = khuVuc.DanhSachVirus;        
+        dsVirus = khuVuc.DanhSachVirus;
 
         const anh = document.createElement('img');
         anh.classList.add('khuvuc-anh');
-        anh.src = "./assets/img/"+khuVuc.Anh;
+        anh.src = "./assets/img/" + khuVuc.Anh;
         anh.alt = `Ảnh của ${khuVuc.Ten}`;
 
         const stt = document.createElement('span');
@@ -76,36 +77,46 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('chon-virus').classList.remove('hidden'); // Hiển thị phần tử với hiệu ứng
     HienThiVirusNgauNhien(dsVirus);
     console.log(dsVirus);
-    
+
     // Hoặc ẩn phần tử với hiệu ứng:
     // chonVirusElement.classList.add('hidden');
-  };  
-  
+  };
+
   window.HienThiVirusNgauNhien = function (dsVirus) {
     const container = document.getElementById('chon-virus');
-    
+
     // Xóa tất cả các nút cũ trước khi thêm mới
     container.innerHTML = '';
-  
+
     dsVirus.forEach(virus => {
       const virusBtn = document.createElement('button');
       virusBtn.classList.add('virus-btn');
       virusBtn.innerHTML = `<i class='bx bxs-virus'></i>`;  // Sử dụng trực tiếp mã virus là tên nút
-  
+
       virusBtn.setAttribute('data-maVR', virus);
       const randomX = Math.floor(Math.random() * (container.offsetWidth - 100));
       const randomY = Math.floor(Math.random() * (container.offsetHeight - 50));
-      
+
       virusBtn.style.left = `${randomX}px`;
       virusBtn.style.top = `${randomY}px`;
-      
+
       // Thêm nút vào phần tử container
       container.appendChild(virusBtn);
-      
+
       // Thêm sự kiện click cho nút
-      virusBtn.addEventListener('click', () => {
-        alert(`Bạn đã nhấn vào mầm mống virus có mã: ${virusBtn.getAttribute('data-maVR')}`);
-      });
+      virusBtn.addEventListener('click', async () => {
+        const virusXuiList = await layTatCaVirusXui();
+        const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.getAttribute('data-maVR'));
+        
+        if (virusTimDuoc) {
+          khoiTaoModal();
+          document.getElementById('virus-tinhhuong').textContent = `Tình huống: ${virusTimDuoc.TinhHuong}`;
+          document.getElementById('virus-thongdiep').textContent = `Thông điệp: ${virusTimDuoc.ThongDiepVicky}`;
+          document.getElementById('modal-virus').classList.remove('hidden');
+          document.getElementById('modal-virus').classList.add('show');
+        }
+      });      
+
     });
   };
 

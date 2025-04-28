@@ -26,15 +26,23 @@
   </main>
 
   <!-- Modal Khu vực -->
-  <div id="modal-khuvuc" class="modal">
+  <div id="modal-khuvuc" class="modal hidden">
     <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
+      <span class="close-modal">&times;</span>
       <h2>Chọn khu vực</h2>
       <ul id="dsKhuVuc">
         <li><button onclick="chooseArea('')">Đang tải...</button></li>
         <li><button onclick="chooseArea('')">Đang tải...</button></li>
         <li><button onclick="chooseArea('')">Đang tải...</button></li>
       </ul>
+    </div>
+  </div>
+
+  <div id="modal-virus" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <p id="virus-tinhhuong"></p>
+      <p id="virus-thongdiep"></p>
     </div>
   </div>
 
