@@ -1,9 +1,24 @@
-import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layKhuVuc } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   var dsVirus;
+
+  document.getElementById('showCaiDatBtn').addEventListener('click', async () => {
+    document.getElementById('modal-caidat').classList.remove('hidden');
+    document.getElementById('modal-caidat').classList.add('show');
+  });
+
+  document.querySelectorAll('#dsChuDe li').forEach(li => {
+    li.addEventListener('click', () => {
+      const chuDe = li.getAttribute('data-chude');
+      document.documentElement.className = '';
+      if (chuDe) {
+        document.documentElement.classList.add(`${chuDe}`);
+      }
+    });
+  });
 
   document.getElementById('ToanManHinh').addEventListener('click', () => {
     const elem = document.documentElement;
@@ -17,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       elem.msRequestFullscreen();
     }
   });
+
+
 
   khoiTaoModal();
   document.getElementById('showKhuVucBtn').addEventListener('click', async () => {
@@ -44,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const sLVirus = document.createElement('p');
         sLVirus.classList.add('khuvuc-slvirus');
         sLVirus.innerHTML = `<i class='bx bxs-virus'></i>: ${khuVuc.DanhSachVirus.length}`;
-        dsVirus = khuVuc.DanhSachVirus;
 
         const anh = document.createElement('img');
         anh.classList.add('khuvuc-anh');
@@ -75,8 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     await HienThiThongBao('Bạn đã chọn khu vực: ' + area, 'info', 3);
 
     document.getElementById('chon-virus').classList.remove('hidden'); // Hiển thị phần tử với hiệu ứng
+    const khuVuc = (await layTatCaKhuVuc()).find(kv => kv.Ten === area);
+    dsVirus = khuVuc.DanhSachVirus;
     HienThiVirusNgauNhien(dsVirus);
-    console.log(dsVirus);
 
     // Hoặc ẩn phần tử với hiệu ứng:
     // chonVirusElement.classList.add('hidden');

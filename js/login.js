@@ -15,7 +15,7 @@ document.querySelector('.login-form').addEventListener('submit', async function 
 
     // Kiểm tra thông tin người dùng
     if (username === "" || password === "") {
-        HienThiThongBao('Vui lòng điền đầy đủ thông tin!', 'warning');
+        await HienThiThongBao('Vui lòng điền đầy đủ thông tin!', 'warning');
         return;
     }
 
@@ -33,17 +33,17 @@ document.querySelector('.login-form').addEventListener('submit', async function 
                         kiemTraChuyenHuong("admin.html");
                         break;
                     default:
-                        HienThiThongBao('Vai trò không hợp lệ!', 'warning');
+                        await HienThiThongBao('Vai trò không hợp lệ!', 'warning');
                         break;
                 }
             } else {
-                HienThiThongBao('Sai mật khẩu!', 'warning');
+                await HienThiThongBao('Sai mật khẩu!', 'warning');
             }
         } else {
-            HienThiThongBao('Tài khoản không tồn tại!', 'warning');
+            await HienThiThongBao('Tài khoản không tồn tại!', 'warning');
         }
     } catch (error) {
-        HienThiThongBao('Lỗi đăng nhập: ' + error.message, 'error');
+        await HienThiThongBao('Lỗi đăng nhập: ' + error.message, 'error');
     }
 });
 document.querySelector('.register-form').addEventListener('submit', async function (event) {
@@ -52,17 +52,17 @@ document.querySelector('.register-form').addEventListener('submit', async functi
     const password = document.querySelector('[name="password"]').value;
     const repass = document.querySelector('[name="confirm-password"]').value;
     if (!username || !password || !repass) {
-        HienThiThongBao('Vui lòng nhập đầy đủ thông tin!', 'warning');
+        await HienThiThongBao('Vui lòng nhập đầy đủ thông tin!', 'warning');
         return;
     }
     if (password !== repass) {
-        HienThiThongBao('Mật khẩu xác nhận không khớp!', 'error');
+        await HienThiThongBao('Mật khẩu xác nhận không khớp!', 'error');
         return;
     }
     const userData = await layNguoiDung(username);
     try {
         if (userData) {
-            HienThiThongBao('Tên người dùng đã tồn tại!', 'warning');
+            await HienThiThongBao('Tên người dùng đã tồn tại!', 'warning');
             return;
         }
         const nguoiDung = {
@@ -72,8 +72,8 @@ document.querySelector('.register-form').addEventListener('submit', async functi
             NgayDangKy: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-')
         };
         await themNguoiDung(nguoiDung);
-        HienThiThongBao('Đăng ký thành công!', 'success');
+        await HienThiThongBao('Đăng ký thành công!', 'success');
     } catch (error) {
-        HienThiThongBao('Lỗi đăng ký: '+ error.message, 'error');
+        await HienThiThongBao('Lỗi đăng ký: '+ error.message, 'error');
     }
 });

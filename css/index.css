@@ -170,3 +170,29 @@ hr {
     border-radius: 3px;
     transition: background-color 0.3s ease;
   }
+
+  #dsChuDe {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  #dsChuDe li {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  #dsChuDe li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  

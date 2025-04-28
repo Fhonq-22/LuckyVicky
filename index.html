@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" class="">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
   <header class="lab-header">
     <h1>LUCKY VICKY's Lab</h1>
@@ -17,13 +19,29 @@
     <button id="ToanManHinh"><i class='bx bx-fullscreen'></i>
     </button>
     <section class="lab-intro">
-      <button id="startBtn">Bắt đầu nhiệm vụ</button>
+      <button id="showCaiDatBtn">Cài đặt</button>
       <button id="showKhuVucBtn">Chọn khu vực</button>
     </section>
     <section id="chon-virus" class="hidden">
       <h2>Tìm mầm mống virus</h2>
     </section>
   </main>
+
+  <div id="modal-caidat" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Cài đặt phòng lab</h2>
+      <ul id="dsChuDe">
+        <li data-chude="" style="background-color: #ffffff;">Mặc định</li>
+        <li data-chude="mint" style="background-color: #72C78F;">Mint</li>
+        <li data-chude="peach" style="background-color: #FF8F6D;">Peach</li>
+        <li data-chude="lavender" style="background-color: #9F7BFF;">Lavender</li>
+        <li data-chude="skyblue" style="background-color: #299DFF;">Sky Blue</li>
+        <li data-chude="rose" style="background-color: #FF1A82;">Rose</li>
+        <li data-chude="softgrey" style="background-color: #B0B0B0;">Soft Grey</li>
+      </ul>      
+    </div>
+  </div>
 
   <!-- Modal Khu vực -->
   <div id="modal-khuvuc" class="modal hidden">
@@ -60,7 +78,10 @@
       <p id="virus-vaccin"></p>
       <hr>
       <ul id="virus-diemnangluong">
-        <li><p>RESI</p><p>+09</p></li>
+        <li>
+          <p>RESI</p>
+          <p>+09</p>
+        </li>
       </ul>
       <hr>
       <button>Thêm vào</button>
@@ -68,9 +89,11 @@
   </div>
 
   <footer class="lab-footer">
-    <p>© 2025 Lucky Vicky's Lab by <a href="https://Fhonq-22.github.io">Hoang Van Phong</a>. Lan tỏa năng lượng tích cực ✨</p>
+    <p>© 2025 Lucky Vicky's Lab by <a href="https://Fhonq-22.github.io">Hoang Van Phong</a>. Lan tỏa năng lượng tích cực
+      ✨</p>
   </footer>
 
   <script type="module" src="js/index.js"></script>
 </body>
+
 </html>
