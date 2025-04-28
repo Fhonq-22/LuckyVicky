@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const anh = document.createElement('img');
         anh.classList.add('khu-vuc-anh');
-        anh.src = khuVuc.Anh;
+        anh.src = "./assets/img/"+khuVuc.Anh;
         anh.alt = `Ảnh của ${khuVuc.Ten}`;
 
         const stt = document.createElement('span');
