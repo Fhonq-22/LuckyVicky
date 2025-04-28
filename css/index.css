@@ -63,3 +63,11 @@ ul#dsKhuVuc {
     overflow-y: auto;
     padding: 0;
 }
+
+#dsKhuVuc .khu-vuc-item{
+    max-width: 222px;
+}
+
+img.khu-vuc-anh {
+    width: 100%;
+}

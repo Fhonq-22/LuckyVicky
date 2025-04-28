@@ -2,101 +2,103 @@
 @import url("./thongbao.css");
 
 body {
-    background: linear-gradient(135deg, var(--color-04), var(--color-05));
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    padding: 1rem;
+  background: linear-gradient(135deg, var(--color-04), var(--color-05));
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  padding: 1rem;
+}
+
+.form-container {
+  background: var(--color-06);
+  /* Soft Beige */
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 360px;
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+h2 {
+  color: var(--color-04);
+  /* Blush Pink */
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+img{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-01);
+  /* Light Aqua */
+  border-radius: 1.2rem;
+  background: var(--color-03);
+  /* Soft Yellow */
+  font-size: 1rem;
+  color: #555;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background-color: var(--color-04);
+  /* Pink Blossom */
+  border: none;
+  border-radius: 1.5rem;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background-color: var(--color-05);
+  /* Peach Pastel */
+}
+
+
+.switch {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--color-04);
+}
+
+.switch a {
+  color: var(--color-03);
+  /* Light Blue */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .form-container {
-    background: var(--color-06); /* Soft Beige */
-    padding: 2.5rem 2rem;
-    border-radius: 2rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    width: 360px;
-    text-align: center;
-    animation: fadeIn 1s ease;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  h2 {
-    color: var(--color-04); /* Blush Pink */
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-  }
-  
-  input[type="email"],
-  input[type="password"],
-  input[type="text"] {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--color-01); /* Light Aqua */
-    border-radius: 1.2rem;
-    background: var(--color-03); /* Soft Yellow */
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  input::placeholder {
-    color: #888;
-  }
-  
-  button {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    background-color: var(--color-04); /* Pink Blossom */
-    border: none;
-    border-radius: 1.5rem;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  button:hover {
-    background-color: var(--color-05); /* Peach Pastel */
-  }
-  
-  .options {
-    text-align: left;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    color: var(--color-02);
-  }
-  
-  .options input[type="checkbox"] {
-    margin-right: 0.5rem;
-  }
-  
-  .switch {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--color-04);
-  }
-  
-  .switch a {
-    color: var(--color-03); /* Light Blue */
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .switch a:hover {
-    text-decoration: underline;
-  }
-  
-  .footer-text {
-    margin-top: 1.5rem;
-    font-size: 0.8rem;
-    color: var(--color-05); /* Gentle Grey */
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
+}
