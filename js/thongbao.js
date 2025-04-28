@@ -1,4 +1,4 @@
-export function HienThiThongBao(message, type = 'success') {
+export function HienThiThongBao(message, type = 'success', time = 5) {
     return new Promise((resolve) => {
       const notification = document.createElement('div');
       const notificationText = document.createElement('span');
@@ -20,12 +20,11 @@ export function HienThiThongBao(message, type = 'success') {
       document.body.appendChild(notification);
   
       notification.style.display = 'flex';
-  
-      // Tự động đóng sau 5 giây
+      notification.style.setProperty('--animation-time', `${time}s`);
       setTimeout(() => {
         notification.remove();
-        resolve(); // Sau 5s tự động resolve
-      }, 5000);
+        resolve();
+      }, time*1000);
     });
   }
   

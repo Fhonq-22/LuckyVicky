@@ -9,6 +9,7 @@
     --color-success: #A0E8A0;
     --color-warning: #FFF19D;
     --color-error: #D97D7D;
+    --animation-time: 5s;
 }
 
 .mint:root {

@@ -1,5 +1,5 @@
 import { addData, getData, updateData, deleteData } from "./firebase-CRUD.js";
-import { NguoiDung, KhuVuc } from "./MODEL.js";
+import { NguoiDung, KhuVuc, VirusXui } from "./MODEL.js";
 
 // #region XỬ LÝ NguoiDung
 export async function themNguoiDung(nguoiDung) {
@@ -48,5 +48,30 @@ export async function suaKhuVuc(maKV, newData) {
 
 export async function xoaKhuVuc(maKV) {
     await deleteData("KhuVuc", maKV);
+}
+// #endregion
+
+// #region XỬ LÝ VirusXui
+export async function themVirusXui(virusXui) {
+    await addData("VirusXui", virusXui.MaVR, new VirusXui(...Object.values(virusXui)).toJSON());
+}
+
+export async function layVirusXui(maVR) {
+    const data = await getData("VirusXui", maVR);
+    return data ? new VirusXui(maVR, data.TinhHuong, data.MucDo, data.Vaccin, data.DiemNangLuong, data.ThongDiepVicky) : null;
+}
+
+export async function layTatCaVirusXui() {
+    const data = await getData("VirusXui", "");
+    return data ? Object.keys(data).map(key => new VirusXui(key, data[key].TinhHuong, data[key].MucDo, data[key].Vaccin, data[key].DiemNangLuong, data[key].ThongDiepVicky)) : [];
+}
+
+export async function suaVirusXui(maVR, newData) {
+    const updatedVirusXui = new VirusXui(maVR, newData.TinhHuong, newData.MucDo, newData.Vaccin, newData.DiemNangLuong, newData.ThongDiepVicky);
+    await updateData("VirusXui", maVR, updatedVirusXui.toJSON());
+}
+
+export async function xoaVirusXui(maVR) {
+    await deleteData("VirusXui", maVR);
 }
 // #endregion

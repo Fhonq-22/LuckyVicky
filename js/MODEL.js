@@ -37,3 +37,24 @@ export class KhuVuc {
         };
     }
 }
+
+export class VirusXui {
+    constructor(MaVR, TinhHuong, MucDo, Vaccin, DiemNangLuong, ThongDiepVicky) {
+        this.MaVR = MaVR;
+        this.TinhHuong = TinhHuong;
+        this.MucDo = MucDo;
+        this.Vaccin = Vaccin;
+        this.DiemNangLuong = DiemNangLuong;
+        this.ThongDiepVicky = ThongDiepVicky;
+    }
+
+    toJSON() {
+        return {
+            TinhHuong: this.TinhHuong,
+            MucDo: this.MucDo,
+            Vaccin: this.Vaccin,
+            DiemNangLuong: this.DiemNangLuong,
+            ThongDiepVicky: this.ThongDiepVicky
+        };
+    }
+}
