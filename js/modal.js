@@ -18,3 +18,15 @@ export function khoiTaoModal() {
     //     }
     // });
 }
+
+export function hienThiModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.remove('hidden');
+    modal.classList.add('show');
+}
+
+export function dongModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.remove('show');
+    modal.classList.add('hidden');
+}

@@ -1,15 +1,9 @@
 import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layNguoiDung, suaNguoiDung, layVirusXui } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
-import { khoiTaoModal } from './modal.js';
+import { khoiTaoModal, hienThiModal, dongModal } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   let dsVirus;
-
-  function hienThiDiv(id) {
-    const div = document.getElementById(id);
-    div.classList.remove('hidden');
-    div.classList.add('show');
-  }
 
   function anDiv(id) {
     const div = document.getElementById(id);
@@ -18,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('showCaiDatBtn').addEventListener('click', () => {
-    hienThiDiv('modal-caidat');
+    hienThiModal('modal-caidat');
   });
 
   document.querySelectorAll('#dsChuDe li').forEach(li => {
@@ -45,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   khoiTaoModal();
 
   document.getElementById('showKhuVucBtn').addEventListener('click', async () => {
-    hienThiDiv('modal-khuvuc');
+    hienThiModal('modal-khuvuc');
 
     try {
       const khuVucList = await layTatCaKhuVuc();
@@ -78,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.chooseArea = async function (area) {
     anDiv('modal-khuvuc');
     await HienThiThongBao(`Bạn đã chọn khu vực: ${area}`, 'info', 3);
-    hienThiDiv('chon-virus');
+    hienThiModal('chon-virus');
 
     const khuVuc = (await layTatCaKhuVuc()).find(kv => kv.Ten === area);
     dsVirus = khuVuc.DanhSachVirus;
@@ -127,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             virusDiemList.appendChild(item);
           }
 
-          hienThiDiv('modal-virus');
+          hienThiModal('modal-virus');
         }
       });
 
@@ -161,10 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
       HienThiThongBao('Virus này đã từng được thu thập!', 'info', 2);
     }
 
-    modal.classList.remove('show');
-    modal.classList.add('hidden');
-    document.getElementById('chon-virus').classList.remove('show');
-    document.getElementById('chon-virus').classList.add('hidden');
+    dongModal('modal-virus');
+    dongModal('chon-virus');
 
     const rectStart = virusBtn.getBoundingClientRect();
     const rectEnd = ongNghiemBtn.getBoundingClientRect();
@@ -248,15 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       dsVirusChuyenHoa.innerHTML = '<li>Chưa chuyển hóa được virus nào</li>';
     }
-
-    // Mở modal
-    document.getElementById('modal-ongnghiem').classList.remove('hidden');
-    document.getElementById('modal-ongnghiem').classList.add('show');
+    hienThiModal('modal-ongnghiem');
   });
 
 });
-
-
 
 document.getElementById('mayChuyenHoaBtn').addEventListener('click', async function () {
   const username = localStorage.getItem('username-luckyvicky');
@@ -291,9 +278,7 @@ document.getElementById('mayChuyenHoaBtn').addEventListener('click', async funct
       dsVirusThuThapChuyenHoa.appendChild(li);
     });
   }
-
-  document.getElementById('modal-chuyenhoa').classList.remove('hidden');
-  document.getElementById('modal-chuyenhoa').classList.add('show');
+  hienThiModal('modal-chuyenhoa');
 });
 
 
@@ -302,8 +287,7 @@ document.getElementById('confirmChuyenHoa').addEventListener('click', async () =
   const selectedLi = document.querySelector('#dsVirusThuThapChuyenHoa .selected');
   if (!selectedLi) {
     HienThiThongBao('Chưa chọn virus để chuyển hóa!', 'warning', 2);
-    document.getElementById('modal-chuyenhoa').classList.remove('show');
-    document.getElementById('modal-chuyenhoa').classList.add('hidden');
+    dongModal('modal-chuyenhoa');
     return;
   }
 
@@ -336,8 +320,7 @@ document.getElementById('confirmChuyenHoa').addEventListener('click', async () =
   });
 
   document.getElementById('tinhHuongChuyenHoa').textContent = virusChon.TinhHuong;
-  document.getElementById('chonVaccinModal').classList.remove('hidden');
-  document.getElementById('chonVaccinModal').classList.add('show');
+  hienThiModal('chonVaccinModal');
 
   // Xử lý xác nhận chọn vaccin
   document.getElementById('xacNhanLuaChonVaccin').onclick = async () => {
@@ -349,8 +332,7 @@ document.getElementById('confirmChuyenHoa').addEventListener('click', async () =
 
     if (vaccinChon.dataset.vaccin !== vaccinDung) {
       HienThiThongBao('Sai vaccin! Chuyển hóa thất bại.', 'error', 3);
-      document.getElementById('chonVaccinModal').classList.remove('show');
-      document.getElementById('chonVaccinModal').classList.add('hidden');
+      dongModal('chonVaccinModal');
       return;
     }
 
@@ -366,25 +348,16 @@ document.getElementById('confirmChuyenHoa').addEventListener('click', async () =
     nguoiDung.VirusChuyenHoa = virusChuyenHoa.join('-');
 
     await suaNguoiDung(nguoiDung);
-
-    document.getElementById('chonVaccinModal').classList.remove('show');
-    document.getElementById('chonVaccinModal').classList.add('hidden');
+    dongModal('chonVaccinModal');
     HienThiThongBao('Chuyển hóa virus thành công!', 'success', 2);
+    dongModal('modal-chuyenhoa');
 
-    document.getElementById('modal-chuyenhoa').classList.remove('show');
-    document.getElementById('modal-chuyenhoa').classList.add('hidden');
-    // Hiển thị modal thông điệp Vicky sau khi chuyển hóa thành công
     if (virusChon.ThongDiepVicky) {
-      document.getElementById('thongdiep-nguoigui').textContent = `Người gửi: ${virusChon.TenVirus || 'Virus Vô Danh'}`;
-      document.getElementById('thongdiep-nguoinhan').textContent = `Người nhận: ${nguoiDung.Ten || 'Chiến binh dũng cảm'}`;
+      document.getElementById('thongdiep-nguoigui').textContent = `Người gửi: ${virusChon.MaVR || 'Virus Vô Danh'}`;
+      document.getElementById('thongdiep-nguoinhan').textContent = `Người nhận: ${nguoiDung.TenNguoiDung || 'Chiến binh dũng cảm'}`;
       document.getElementById('thongdiep-noidung').textContent = `"${virusChon.ThongDiepVicky}"`;
-
-      const modal = document.getElementById('modal-thongdiepVicky');
-      modal.classList.remove('hidden');
-      modal.classList.add('show');
+      hienThiModal('modal-thongdiepVicky');
     }
-
-
   };
 });
 

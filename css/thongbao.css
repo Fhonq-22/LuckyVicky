@@ -15,6 +15,7 @@
     max-width: 300px;
     border-bottom: 5px solid white;
     animation: fadeIn 0.5s forwards;
+    z-index: 2222;
   }
   
   .close-btn {

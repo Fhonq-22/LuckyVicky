@@ -321,6 +321,7 @@ hr {
     list-style-type: none;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
 }
 
@@ -365,25 +366,27 @@ hr {
 
   .vaccin-lua-chon {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid var(--color-02);
     border-radius: 6px;
     cursor: pointer;
-    background: #f9f9f9;
+    background: linear-gradient(135deg, var(--color-01), var(--color-03));
     transition: all 0.3s;
     font-size: 12px;
     font-style: italic;
+    max-width: 450px;
   }
   .vaccin-lua-chon:hover {
-    background: #eef;
+    background: linear-gradient(315deg, var(--color-01), var(--color-03));
   }
   .vaccin-lua-chon.selected {
-    background: var(--color-06);
+    background: linear-gradient(135deg, var(--color-04), var(--color-05));
     color: white;
     border-color: var(--color-06);
   }
   .vaccin-grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
