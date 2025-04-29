@@ -1,176 +1,179 @@
-import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layKhuVuc } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  var dsVirus;
+  let dsVirus;
 
-  document.getElementById('showCaiDatBtn').addEventListener('click', async () => {
-    document.getElementById('modal-caidat').classList.remove('hidden');
-    document.getElementById('modal-caidat').classList.add('show');
+  function hienThiDiv(id) {
+    const div = document.getElementById(id);
+    div.classList.remove('hidden');
+    div.classList.add('show');
+  }
+
+  function anDiv(id) {
+    const div = document.getElementById(id);
+    div.classList.remove('show');
+    div.classList.add('hidden');
+  }
+
+  document.getElementById('showCaiDatBtn').addEventListener('click', () => {
+    hienThiDiv('modal-caidat');
   });
 
   document.querySelectorAll('#dsChuDe li').forEach(li => {
     li.addEventListener('click', () => {
       const chuDe = li.getAttribute('data-chude');
       document.documentElement.className = '';
-      if (chuDe) {
-        document.documentElement.classList.add(`${chuDe}`);
-      }
+      if (chuDe) document.documentElement.classList.add(chuDe);
     });
   });
 
   document.getElementById('ToanManHinh').addEventListener('click', () => {
     const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { // Firefox
-      elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari và Opera
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { // IE/Edge
-      elem.msRequestFullscreen();
-    }
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
   });
 
-
-
   khoiTaoModal();
+
   document.getElementById('showKhuVucBtn').addEventListener('click', async () => {
-    document.getElementById('modal-khuvuc').classList.remove('hidden');
-    document.getElementById('modal-khuvuc').classList.add('show');
+    hienThiDiv('modal-khuvuc');
 
     try {
-      const khuVucList = await layTatCaKhuVuc();  // Lấy danh sách khu vực
+      const khuVucList = await layTatCaKhuVuc();
       const ul = document.getElementById('dsKhuVuc');
-      ul.innerHTML = '';  // Xóa nội dung cũ trong danh sách khu vực
+      ul.innerHTML = '';
       khuVucList.sort((a, b) => a.STT - b.STT);
+
       khuVucList.forEach(khuVuc => {
         const li = document.createElement('li');
-        li.classList.add('khuvuc-item');
+        li.className = 'khuvuc-item';
 
-        const btn = document.createElement('button');
-        btn.classList.add('khuvuc-button');
-        btn.textContent = khuVuc.Ten;
-        btn.onclick = () => chooseArea(khuVuc.Ten);
+        li.innerHTML = `
+          <span class="khuvuc-stt">#${khuVuc.STT}</span>
+          <button class="khuvuc-button">${khuVuc.Ten}</button>
+          <p class="khuvuc-slvirus"><i class='bx bxs-virus'></i>: ${khuVuc.DanhSachVirus.length}</p>
+          <p class="khuvuc-diadiem"><i class='bx bxs-map'></i>: ${khuVuc.DiaDiem}</p>
+          <img class="khuvuc-anh" src="./assets/img/${khuVuc.Anh}" alt="Ảnh của ${khuVuc.Ten}">
+        `;
 
-        const diaDiem = document.createElement('p');
-        diaDiem.classList.add('khuvuc-diadiem');
-        diaDiem.innerHTML = `<i class='bx bxs-map'></i>: ${khuVuc.DiaDiem}`;
-
-        const sLVirus = document.createElement('p');
-        sLVirus.classList.add('khuvuc-slvirus');
-        sLVirus.innerHTML = `<i class='bx bxs-virus'></i>: ${khuVuc.DanhSachVirus.length}`;
-
-        const anh = document.createElement('img');
-        anh.classList.add('khuvuc-anh');
-        anh.src = "./assets/img/" + khuVuc.Anh;
-        anh.alt = `Ảnh của ${khuVuc.Ten}`;
-
-        const stt = document.createElement('span');
-        stt.classList.add('khuvuc-stt');
-        stt.textContent = `#${khuVuc.STT}`;
-
-        li.appendChild(stt);
-        li.appendChild(btn);
-        li.appendChild(sLVirus);
-        li.appendChild(diaDiem);
-        li.appendChild(anh);
-
+        li.querySelector('button').onclick = () => chooseArea(khuVuc.Ten);
         ul.appendChild(li);
       });
 
     } catch (error) {
-      HienThiThongBao('Lỗi khi lấy danh sách khu vực:' + error, 'error');
-      console.error('Lỗi khi lấy danh sách khu vực:', error);
+      HienThiThongBao('Lỗi khi lấy danh sách khu vực: ' + error, 'error');
+      console.error(error);
     }
   });
 
   window.chooseArea = async function (area) {
-    document.getElementById('modal-khuvuc').style.display = 'none'; // Đóng modal khi chọn
-    await HienThiThongBao('Bạn đã chọn khu vực: ' + area, 'info', 3);
+    anDiv('modal-khuvuc');
+    await HienThiThongBao(`Bạn đã chọn khu vực: ${area}`, 'info', 3);
+    hienThiDiv('chon-virus');
 
-    document.getElementById('chon-virus').classList.remove('hidden'); // Hiển thị phần tử với hiệu ứng
     const khuVuc = (await layTatCaKhuVuc()).find(kv => kv.Ten === area);
     dsVirus = khuVuc.DanhSachVirus;
     HienThiVirusNgauNhien(dsVirus);
-
-    // Hoặc ẩn phần tử với hiệu ứng:
-    // chonVirusElement.classList.add('hidden');
   };
 
   window.HienThiVirusNgauNhien = function (dsVirus) {
     const container = document.getElementById('chon-virus');
-
-    // Xóa tất cả các nút cũ trước khi thêm mới
     container.innerHTML = '';
 
     dsVirus.forEach(virus => {
       const virusBtn = document.createElement('button');
-      virusBtn.classList.add('virus-btn');
-      virusBtn.innerHTML = `<i class='bx bxs-virus'></i>`;  // Sử dụng trực tiếp mã virus là tên nút
+      virusBtn.className = 'virus-btn';
+      virusBtn.innerHTML = `<i class='bx bxs-virus'></i>`;
+      virusBtn.dataset.mavr = virus;
 
-      virusBtn.setAttribute('data-maVR', virus);
-      const randomX = Math.floor(Math.random() * (container.offsetWidth - 100));
-      const randomY = Math.floor(Math.random() * (container.offsetHeight - 50));
+      virusBtn.style.left = `${Math.random() * (container.offsetWidth - 100)}px`;
+      virusBtn.style.top = `${Math.random() * (container.offsetHeight - 50)}px`;
 
-      virusBtn.style.left = `${randomX}px`;
-      virusBtn.style.top = `${randomY}px`;
-
-      // Thêm nút vào phần tử container
-      container.appendChild(virusBtn);
-
-      // Thêm sự kiện click cho nút
       virusBtn.addEventListener('click', async () => {
         const virusXuiList = await layTatCaVirusXui();
-        const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.getAttribute('data-maVR'));
+        const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.dataset.mavr);
 
         if (virusTimDuoc) {
           khoiTaoModal();
           document.getElementById('virus-mavr').textContent = `VIRUS: ${virusTimDuoc.MaVR}`;
 
           document.querySelectorAll('#virus-mucdo .mucdo').forEach((div, index) => {
-            if (index < virusTimDuoc.MucDo) {
-              div.style.backgroundColor = 'var(--color-06)'; // Chẳng hạn là màu đỏ cho các mức độ nguy hiểm
-            } else {
-              div.style.backgroundColor = 'var(--color-01)'; // Màu xanh nhạt cho các mức độ thấp hơn
-            }
+            div.style.backgroundColor = index < virusTimDuoc.MucDo ? 'var(--color-06)' : 'var(--color-01)';
           });
+
           document.getElementById('virus-tinhhuong').innerText = `Tình huống:\n ${virusTimDuoc.TinhHuong}`;
           document.getElementById('virus-vaccin').textContent = `Vaccin: ${virusTimDuoc.Vaccin}`;
-          const diemNangLuongList = virusTimDuoc.DiemNangLuong.split('-'); // Tách chuỗi theo dấu '-'
+
           const virusDiemList = document.getElementById('virus-diemnangluong');
-          virusDiemList.innerHTML = ''; // Xóa nội dung cũ
+          virusDiemList.innerHTML = '';
 
-          diemNangLuongList.forEach(async diem => {
-            const [maNL, diemSo] = [diem.slice(0, 4), diem.slice(4)]; // Lấy MaNL và điểm
-            const diemItem = document.createElement('li');
-
-            const pMaNL = document.createElement('p');
-            pMaNL.textContent = `${maNL}`;
+          for (const diem of virusTimDuoc.DiemNangLuong.split('-')) {
+            const [maNL, diemSo] = [diem.slice(0, 4), diem.slice(4)];
             const nangLuong = await layNangLuong(maNL);
-            const mauSac = nangLuong.MauSac;
-            pMaNL.style.backgroundImage = `linear-gradient(to right, ${mauSac}, var(--color-03))`;
 
-            diemItem.appendChild(pMaNL);
+            const item = document.createElement('li');
+            item.innerHTML = `
+              <p style="background-image:linear-gradient(to right, ${nangLuong.MauSac}, var(--color-03))">${maNL}</p>
+              <p style="background-image:linear-gradient(to left, ${nangLuong.MauSac}, var(--color-03))">+${diemSo}</p>
+            `;
+            virusDiemList.appendChild(item);
+          }
 
-            // Tạo thẻ <p> cho điểm số (diemSo)
-            const pDiemSo = document.createElement('p');
-            pDiemSo.textContent = `+ ${diemSo}`;
-            pDiemSo.style.backgroundImage = `linear-gradient(to left, ${mauSac}, var(--color-03))`;
-            diemItem.appendChild(pDiemSo);
-
-            // Thêm item vào danh sách
-            virusDiemList.appendChild(diemItem);
-          });
-
-
-          document.getElementById('modal-virus').classList.remove('hidden');
-          document.getElementById('modal-virus').classList.add('show');
+          hienThiDiv('modal-virus');
         }
       });
 
+      container.appendChild(virusBtn);
     });
   };
+
+  document.getElementById('virus-thuthap').addEventListener('click', function() {
+    const modal = document.getElementById('modal-virus');
+    const maVR = document.getElementById('virus-mavr').textContent.replace('VIRUS: ', '').trim();
+    console.log(maVR);
+    const virusBtn = document.querySelector(`.virus-btn[data-mavr="${maVR}"]`);
+    const ongNghiemBtn = document.getElementById('ongNghiemBtn');
+
+    if (!ongNghiemBtn) {
+        console.error('Không tìm thấy nút ongNghiemBtn!');
+        return;
+    }
+
+    modal.classList.remove('show');
+    modal.classList.add('hidden');
+    document.getElementById('chon-virus').classList.remove('show');
+    document.getElementById('chon-virus').classList.add('hidden');
+
+    const rectStart = virusBtn.getBoundingClientRect();
+    const rectEnd = ongNghiemBtn.getBoundingClientRect();
+
+    const virus = document.createElement('div');
+    virus.classList.add('flying-virus');
+    document.body.appendChild(virus);
+
+    // Vị trí bắt đầu ở nút "thu thập"
+    virus.style.left = (rectStart.left + rectStart.width / 2) + 'px';
+    virus.style.top = (rectStart.top + rectStart.height / 2) + 'px';
+
+    // Force reflow để chắc chắn cập nhật vị trí
+    void virus.offsetWidth;
+
+    // Vị trí bay đến: trung tâm nút ống nghiệm
+    virus.style.setProperty('--start-x', rectStart.left + rectStart.width / 2 + 'px');
+    virus.style.setProperty('--start-y', rectStart.top + rectStart.height / 2 + 'px');
+    virus.style.setProperty('--end-x', rectEnd.left + rectEnd.width / 2 + 'px');
+    virus.style.setProperty('--end-y', rectEnd.top + rectEnd.height / 2 + 'px');
+
+    virus.classList.add('fly-to-ongnghiem');
+
+    virus.addEventListener('animationend', () => {
+        virus.remove();
+    });
+});
+
 
 });

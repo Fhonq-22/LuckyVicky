@@ -123,13 +123,17 @@ img.khuvuc-anh {
 }
 .virus-btn {
     position: absolute;
-    background-color: var(--color-error);
+    background: radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 165, 0, 1) 40%, rgba(255, 255, 255, 0) 70%);
     color: white;
     padding: 10px;
     margin-top: 0;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+}
+
+.virus-btn:hover {
+    background: radial-gradient(circle, rgba(255, 165, 0, 1) 0%, rgba(255, 0, 0, 1) 40%, rgba(255, 255, 255, 0) 70%);
 }
 
 ul#virus-diemnangluong li {
@@ -196,3 +200,52 @@ hr {
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
   
+
+  .flying-virus {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 165, 0, 1) 40%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    left: var(--start-x);
+    top: var(--start-y);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.flying-virus.fly-to-ongnghiem {
+    animation: flyToOngNghiem 1s ease-in-out forwards, trailEffect 1s ease-out forwards;
+}
+
+@keyframes flyToOngNghiem {
+    0% {
+        left: var(--start-x);
+        top: var(--start-y);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(0.7) rotate(15deg);
+        opacity: 0.8;
+    }
+    100% {
+        left: var(--end-x);
+        top: var(--end-y);
+        transform: translate(-50%, -50%) scale(0.3) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes trailEffect {
+    0% {
+        box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 0px 0px rgba(255, 165, 0, 0);
+    }
+}
