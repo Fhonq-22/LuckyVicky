@@ -60,7 +60,7 @@ ul#dsKhuVuc {
     flex-wrap: wrap;
     justify-content: space-between;
     list-style: none;
-    max-height: 500px;
+    max-height: 450px;
     overflow-y: auto;
     padding: 0;
 }
@@ -70,7 +70,8 @@ ul#dsKhuVuc {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    max-width: 250px;
+    width: 100%;
+    max-width: 270px;
     position: relative;
     margin-top: 8px;
 }
@@ -118,9 +119,10 @@ img.khuvuc-anh {
 }
 
 
-#modal-virus .modal-content{
+#modal-virus .modal-content {
     transform: scale(0.8);
 }
+
 .virus-btn {
     position: absolute;
     background: radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 165, 0, 1) 40%, rgba(255, 255, 255, 0) 70%);
@@ -140,52 +142,59 @@ ul#virus-diemnangluong li {
     display: flex;
     margin: 4px;
 }
+
 ul#virus-diemnangluong li p:first-child,
-ul#virus-diemnangluong li p:last-child{
+ul#virus-diemnangluong li p:last-child {
     padding: 4px 8px;
     border: 2px solid var(--color-06);
 }
-ul#virus-diemnangluong li p:first-child{
+
+ul#virus-diemnangluong li p:first-child {
     border-right: none;
     border-radius: 12px 0 0 12px;
 }
-ul#virus-diemnangluong li p:last-child{
+
+ul#virus-diemnangluong li p:last-child {
     border-radius: 0 12px 12px 0;
 }
 
 hr {
     border: none;
-    border-top: 2px solid var(--color-05);  /* Màu xanh lá */
-    width: 100%;  /* Chiều rộng của hr */
-    margin: 12px auto;  /* Căn giữa */
+    border-top: 2px solid var(--color-05);
+    /* Màu xanh lá */
+    width: 100%;
+    /* Chiều rộng của hr */
+    margin: 12px auto;
+    /* Căn giữa */
 }
 
 #virus-mucdo {
     display: flex;
-    justify-content: center; /* Căn giữa các khối vuông */
+    justify-content: center;
+    /* Căn giữa các khối vuông */
     gap: 4px;
     margin: 10px 0;
-    
-  }
+
+}
 
 .mucdo {
     width: 20px;
     height: 20px;
     border-radius: 3px;
     transition: background-color 0.3s ease;
-  }
+}
 
-  #dsChuDe {
+#dsChuDe {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-  }
-  
-  #dsChuDe li {
-    width: 80px;
-    height: 80px;
+}
+
+#dsChuDe li {
+    padding: 4px 8px;
+    border: 2px solid var(--color-05);
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -193,15 +202,15 @@ hr {
     align-items: center;
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  #dsChuDe li:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  }
-  
+}
 
-  .flying-virus {
+#dsChuDe li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.flying-virus {
     position: fixed;
     width: 20px;
     height: 20px;
@@ -226,10 +235,12 @@ hr {
         transform: translate(-50%, -50%) scale(1) rotate(0deg);
         opacity: 1;
     }
+
     50% {
         transform: translate(-50%, -50%) scale(0.7) rotate(15deg);
         opacity: 0.8;
     }
+
     100% {
         left: var(--end-x);
         top: var(--end-y);
@@ -242,9 +253,11 @@ hr {
     0% {
         box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.8);
     }
+
     50% {
         box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.6);
     }
+
     100% {
         box-shadow: 0 0 0px 0px rgba(255, 165, 0, 0);
     }

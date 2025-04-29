@@ -16,11 +16,9 @@
   </header>
 
   <main class="lab-main">
-    <button id="ToanManHinh"><i class='bx bx-fullscreen'></i>
-    </button>
     <section class="lab-intro">
-      <button id="showCaiDatBtn">Cài đặt</button>
-      <button id="showKhuVucBtn">Chọn khu vực</button>
+      <button id="showCaiDatBtn">⚙️</button>
+      <button id="showKhuVucBtn">🗺️</button>
       <button id="ongNghiemBtn">🧪</button>
     </section>
     <section id="chon-virus" class="hidden">
@@ -32,15 +30,20 @@
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       <h2>Cài đặt phòng lab</h2>
+      <hr>
+      <p>Chủ đề</p>
       <ul id="dsChuDe">
-        <li data-chude="" style="background-color: #ffffff;">Mặc định</li>
+        <li data-chude="" style="background: linear-gradient(135deg, #A0E8A0, #FFB3CC, #FFF19D, #C5A8FF, #A0C8FF, #FBD0D0);">Mặc định</li>
         <li data-chude="mint" style="background-color: #72C78F;">Mint</li>
         <li data-chude="peach" style="background-color: #FF8F6D;">Peach</li>
         <li data-chude="lavender" style="background-color: #9F7BFF;">Lavender</li>
         <li data-chude="skyblue" style="background-color: #299DFF;">Sky Blue</li>
         <li data-chude="rose" style="background-color: #FF1A82;">Rose</li>
         <li data-chude="softgrey" style="background-color: #B0B0B0;">Soft Grey</li>
-      </ul>      
+      </ul>
+      <hr>
+      <p>Tương tác</p>
+      <button id="ToanManHinh"><i class='bx bx-fullscreen'></i></button>
     </div>
   </div>
 
@@ -49,6 +52,7 @@
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       <h2>Chọn khu vực</h2>
+      <hr>
       <ul id="dsKhuVuc">
         <li><button onclick="chooseArea('')">Đang tải...</button></li>
         <li><button onclick="chooseArea('')">Đang tải...</button></li>
@@ -86,6 +90,17 @@
       </ul>
       <hr>
       <button id="virus-thuthap">Thu thập</button>
+    </div>
+  </div>
+
+  <div id="modal-ongnghiem" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Mầm mống virus đã thu thập được</h2>
+      <hr>
+      <ul id="dsVirusThuThap"></ul>
+      <hr>
+      <ul id="dsVirusChuyenHoa"></ul>
     </div>
   </div>
 

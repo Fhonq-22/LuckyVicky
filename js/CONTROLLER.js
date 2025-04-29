@@ -8,7 +8,7 @@ export async function themNguoiDung(nguoiDung) {
 
 export async function layNguoiDung(tenNguoiDung) {
     const data = await getData("NguoiDung", tenNguoiDung);
-    return data ? new NguoiDung(tenNguoiDung, data.MatKhau, data.VaiTro, data.NgayDangKy) : null;
+    return data ? new NguoiDung(tenNguoiDung, data.MatKhau, data.VaiTro, data.NgayDangKy, data.VirusThuThap, data.VirusChuyenHoa) : null;
 }
 
 export async function layTatCaNguoiDung() {
@@ -17,7 +17,7 @@ export async function layTatCaNguoiDung() {
 }
 
 export async function suaNguoiDung(tenNguoiDung, newData) {
-    const updatedNguoiDung = new NguoiDung(tenNguoiDung, newData.MatKhau, newData.VaiTro);
+    const updatedNguoiDung = new NguoiDung(tenNguoiDung, newData.MatKhau, newData.VaiTro, newData.NgayDangKy, newData.VirusThuThap, newData.VirusChuyenHoa);
     await updateData("NguoiDung", tenNguoiDung, updatedNguoiDung.toJSON());
 }
 

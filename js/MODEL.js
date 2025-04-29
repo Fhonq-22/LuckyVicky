@@ -1,16 +1,20 @@
 export class NguoiDung {
-    constructor(TenNguoiDung, MatKhau, VaiTro, NgayDangKy) {
+    constructor(TenNguoiDung, MatKhau, VaiTro, NgayDangKy, VirusThuThap, VirusChuyenHoa) {
         this.TenNguoiDung = TenNguoiDung;
         this.MatKhau = MatKhau;
         this.VaiTro = VaiTro;
         this.NgayDangKy = NgayDangKy;
+        this.VirusThuThap = VirusThuThap;
+        this.VirusChuyenHoa = VirusChuyenHoa;
     }
 
     toJSON() {
         return {
             MatKhau: this.MatKhau,
             VaiTro: this.VaiTro,
-            NgayDangKy: this.NgayDangKy
+            NgayDangKy: this.NgayDangKy,
+            VirusThuThap: this.VirusThuThap,
+            VirusChuyenHoa: this.VirusChuyenHoa
         };
     }
 }

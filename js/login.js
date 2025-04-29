@@ -24,7 +24,7 @@ document.querySelector('.login-form').addEventListener('submit', async function 
         if (userData) {
             if (userData.MatKhau === password) {
                 await HienThiThongBao('Đăng nhập thành công! Vai trò: '+userData.VaiTro, 'success');
-                localStorage.setItem("username", username);
+                localStorage.setItem("username-luckyvicky", username);
                 switch (userData.VaiTro) {
                     case "Player":
                         kiemTraChuyenHuong("index.html");
@@ -69,7 +69,9 @@ document.querySelector('.register-form').addEventListener('submit', async functi
             TenNguoiDung: username,
             MatKhau: password,
             VaiTro: "Player",
-            NgayDangKy: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-')
+            NgayDangKy: new Date().toLocaleDateString('en-GB').split('/').reverse().join('-'),
+            VirusThuThap: "",
+            VirusChuyenHoa: ""
         };
         await themNguoiDung(nguoiDung);
         await HienThiThongBao('Đăng ký thành công!', 'success');

@@ -1,4 +1,4 @@
-import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layNguoiDung } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.dataset.mavr);
 
         if (virusTimDuoc) {
-          khoiTaoModal();
+          // khoiTaoModal();
           document.getElementById('virus-mavr').textContent = `VIRUS: ${virusTimDuoc.MaVR}`;
 
           document.querySelectorAll('#virus-mucdo .mucdo').forEach((div, index) => {
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  document.getElementById('virus-thuthap').addEventListener('click', function() {
+  document.getElementById('virus-thuthap').addEventListener('click', function () {
     const modal = document.getElementById('modal-virus');
     const maVR = document.getElementById('virus-mavr').textContent.replace('VIRUS: ', '').trim();
     console.log(maVR);
@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ongNghiemBtn = document.getElementById('ongNghiemBtn');
 
     if (!ongNghiemBtn) {
-        console.error('Không tìm thấy nút ongNghiemBtn!');
-        return;
+      console.error('Không tìm thấy nút ongNghiemBtn!');
+      return;
     }
 
     modal.classList.remove('show');
@@ -171,9 +171,53 @@ document.addEventListener('DOMContentLoaded', () => {
     virus.classList.add('fly-to-ongnghiem');
 
     virus.addEventListener('animationend', () => {
-        virus.remove();
+      virus.remove();
     });
-});
+  });
 
+  document.getElementById('ongNghiemBtn').addEventListener('click', async function () {
+    const username = localStorage.getItem('username-luckyvicky');
+    const nguoiDung = await layNguoiDung(username);
+
+    if (!nguoiDung) {
+      console.error('Không tìm thấy người dùng:', username);
+      return;
+    }
+
+    const dsVirusThuThap = document.getElementById('dsVirusThuThap');
+    const dsVirusChuyenHoa = document.getElementById('dsVirusChuyenHoa');
+
+    // Xóa nội dung cũ nếu có
+    dsVirusThuThap.innerHTML = '';
+    dsVirusChuyenHoa.innerHTML = '';
+
+    // Xử lý VirusThuThap
+    if (nguoiDung.VirusThuThap && nguoiDung.VirusThuThap.trim() !== '') {
+      const danhSachThuThap = nguoiDung.VirusThuThap.split('-');
+      danhSachThuThap.forEach(virus => {
+        const li = document.createElement('li');
+        li.textContent = virus;
+        dsVirusThuThap.appendChild(li);
+      });
+    } else {
+      dsVirusThuThap.innerHTML = '<li>Chưa thu thập được virus nào</li>';
+    }
+
+    // Xử lý VirusChuyenHoa
+    if (nguoiDung.VirusChuyenHoa && nguoiDung.VirusChuyenHoa.trim() !== '') {
+      const danhSachChuyenHoa = nguoiDung.VirusChuyenHoa.split('-');
+      danhSachChuyenHoa.forEach(virus => {
+        const li = document.createElement('li');
+        li.textContent = virus;
+        dsVirusChuyenHoa.appendChild(li);
+      });
+    } else {
+      dsVirusChuyenHoa.innerHTML = '<li>Chưa chuyển hóa được virus nào</li>';
+    }
+
+    // Mở modal
+    document.getElementById('modal-ongnghiem').classList.remove('hidden');
+    document.getElementById('modal-ongnghiem').classList.add('show');
+  });
 
 });

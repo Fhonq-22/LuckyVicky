@@ -15,6 +15,7 @@
 }
 
 .modal-content {
+  position: relative;
   background-color: white;
   padding: 20px;
   border: 1px solid #888;
@@ -28,15 +29,18 @@
 }
 
 .close-modal {
-  color: #aaa;
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  color: var(--color-05);
   float: right;
-  font-size: 28px;
+  font-size: 2.5rem;
   font-weight: bold;
 }
 
 .close-modal:hover,
 .close-modal:focus {
-  color: black;
+  color: var(--color-error);
   text-decoration: none;
   cursor: pointer;
 }
