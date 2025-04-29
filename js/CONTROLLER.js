@@ -16,9 +16,9 @@ export async function layTatCaNguoiDung() {
     return data ? Object.keys(data) : [];
 }
 
-export async function suaNguoiDung(tenNguoiDung, newData) {
-    const updatedNguoiDung = new NguoiDung(tenNguoiDung, newData.MatKhau, newData.VaiTro, newData.NgayDangKy, newData.VirusThuThap, newData.VirusChuyenHoa);
-    await updateData("NguoiDung", tenNguoiDung, updatedNguoiDung.toJSON());
+export async function suaNguoiDung(nguoiDung) {
+    // const updatedNguoiDung = new NguoiDung(tenNguoiDung, newData.MatKhau, newData.VaiTro, newData.NgayDangKy, newData.VirusThuThap, newData.VirusChuyenHoa);
+    await updateData("NguoiDung", nguoiDung.TenNguoiDung, nguoiDung.toJSON());
 }
 
 export async function xoaNguoiDung(tenNguoiDung) {

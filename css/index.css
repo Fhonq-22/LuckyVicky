@@ -10,17 +10,20 @@ body {
     /* font-family: 'Poppins', sans-serif; */
 }
 
-#ToanManHinh {
-    padding: 10px 20px;
+#ToanManHinh,
+#ThuNhoManHinh {
+    padding: 8px 16px;
     font-size: 16px;
-    background-color: #4CAF50;
+    background-color: var(--color-04);
     color: white;
     border: none;
     cursor: pointer;
 }
 
-#ToanManHinh:hover {
-    background-color: #45a049;
+#ToanManHinh:hover,
+#ThuNhoManHinh:hover {
+    transform: scale(1.1);
+    background-color: var(--color-05);
 }
 
 .lab-header,
@@ -262,3 +265,147 @@ hr {
         box-shadow: 0 0 0px 0px rgba(255, 165, 0, 0);
     }
 }
+
+
+#dsVirusThuThap,
+#dsVirusChuyenHoa {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 2px dashed var(--color-03);
+    background-color: var(--color-01);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+#dsVirusThuThap li,
+#dsVirusChuyenHoa li {
+    position: relative;
+    padding: 6px 10px;
+    padding-right: 16px;
+    background: linear-gradient(135deg, var(--color-02), var(--color-04));
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid var(--color-06);
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+}
+
+.x-icon {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    cursor: pointer;
+    color: var(--color-06);
+    font-weight: bold;
+    font-size: 14px;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+
+#dsVirusThuThap li:hover,
+#dsVirusChuyenHoa li:hover {
+    transform: scale(1.05);
+    background: linear-gradient(315deg, var(--color-02), var(--color-04));
+}
+
+
+#dsVirusThuThapChuyenHoa {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 12px;
+}
+
+#dsVirusThuThapChuyenHoa li {
+    position: relative;
+    padding: 8px;
+    background: linear-gradient(135deg, var(--color-01), var(--color-04));
+    margin: 5px 0;
+    border: 2px solid var(--color-05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+}
+
+#dsVirusThuThapChuyenHoa li.selected {
+    background: linear-gradient(315deg, var(--color-01), var(--color-03), var(--color-05));
+}
+#dsVirusThuThapChuyenHoa li.selected {
+    position: relative;
+    background-color: var(--color-01);
+    border-radius: 20px;
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+  
+  #dsVirusThuThapChuyenHoa li.selected::after {
+    content: '✔';
+    width: 16px;
+    height: 16px;
+    color: var(--color-05);
+    background: linear-gradient(135deg, var(--color-03), var(--color-02));
+    border: 2px solid var(--color-05);
+    border-radius: 50%;
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+  }
+  
+
+  .vaccin-lua-chon {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #f9f9f9;
+    transition: all 0.3s;
+    font-size: 12px;
+    font-style: italic;
+  }
+  .vaccin-lua-chon:hover {
+    background: #eef;
+  }
+  .vaccin-lua-chon.selected {
+    background: var(--color-06);
+    color: white;
+    border-color: var(--color-06);
+  }
+  .vaccin-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+
+  
+  
+  #modal-thongdiepVicky p#thongdiep-nguoigui,
+  #modal-thongdiepVicky p#thongdiep-nguoinhan {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-04);
+  }
+  
+  #modal-thongdiepVicky #thongdiep-noidung {
+    background-color: var(--color-01);
+    border-left: 4px solid var(--color-06);
+    padding: 12px 16px;
+    font-style: italic;
+    white-space: pre-line;
+    color: var(--color-05);
+  }
+  
+  
+  

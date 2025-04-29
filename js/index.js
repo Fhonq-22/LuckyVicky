@@ -1,4 +1,4 @@
-import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layNguoiDung } from "./CONTROLLER.js";
+import { layTatCaKhuVuc, layTatCaVirusXui, layNangLuong, layNguoiDung, suaNguoiDung, layVirusXui } from "./CONTROLLER.js";
 import { HienThiThongBao } from './thongbao.js';
 import { khoiTaoModal } from './modal.js';
 
@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
     else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
     else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+  });
+  document.getElementById('ThuNhoManHinh').addEventListener('click', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
   });
 
   khoiTaoModal();
@@ -98,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const virusTimDuoc = virusXuiList.find(vr => vr.MaVR === virusBtn.dataset.mavr);
 
         if (virusTimDuoc) {
-          // khoiTaoModal();
           document.getElementById('virus-mavr').textContent = `VIRUS: ${virusTimDuoc.MaVR}`;
 
           document.querySelectorAll('#virus-mucdo .mucdo').forEach((div, index) => {
@@ -131,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  document.getElementById('virus-thuthap').addEventListener('click', function () {
+  document.getElementById('virus-thuthap').addEventListener('click', async function () {
     const modal = document.getElementById('modal-virus');
     const maVR = document.getElementById('virus-mavr').textContent.replace('VIRUS: ', '').trim();
     console.log(maVR);
@@ -141,6 +145,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!ongNghiemBtn) {
       console.error('Không tìm thấy nút ongNghiemBtn!');
       return;
+    }
+
+    const nguoiDung = await layNguoiDung(localStorage.getItem('username-luckyvicky'));
+    const virusTTArr = nguoiDung.VirusThuThap.split('-').filter(x => x);
+    const virusCHArr = nguoiDung.VirusChuyenHoa.split('-').filter(x => x);
+
+    if (!virusTTArr.includes(maVR) && !virusCHArr.includes(maVR)) {
+      virusTTArr.unshift(maVR);
+      nguoiDung.VirusThuThap = virusTTArr.join('-');
+      await suaNguoiDung(nguoiDung);
+      HienThiThongBao('Thu thập virus thành công!', 'success', 2);
+    }
+    else {
+      HienThiThongBao('Virus này đã từng được thu thập!', 'info', 2);
     }
 
     modal.classList.remove('show');
@@ -197,6 +215,22 @@ document.addEventListener('DOMContentLoaded', () => {
       danhSachThuThap.forEach(virus => {
         const li = document.createElement('li');
         li.textContent = virus;
+
+        const xIcon = document.createElement('span');
+        xIcon.textContent = 'x';
+        xIcon.className = 'x-icon';
+        xIcon.addEventListener('click', async function (e) {
+          e.stopPropagation();
+          const index = danhSachThuThap.indexOf(virus);
+          if (index > -1) {
+            danhSachThuThap.splice(index, 1);
+            nguoiDung.VirusThuThap = danhSachThuThap.join('-');
+            await suaNguoiDung(nguoiDung);
+            li.remove();
+          }
+        });
+
+        li.appendChild(xIcon);
         dsVirusThuThap.appendChild(li);
       });
     } else {
@@ -221,3 +255,136 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+
+
+document.getElementById('mayChuyenHoaBtn').addEventListener('click', async function () {
+  const username = localStorage.getItem('username-luckyvicky');
+  const nguoiDung = await layNguoiDung(username);
+
+  if (!nguoiDung) {
+    console.error('Không tìm thấy người dùng:', username);
+    return;
+  }
+
+  const virusThuThap = nguoiDung.VirusThuThap ? nguoiDung.VirusThuThap.split('-').filter(x => x) : [];
+  const dsVirusThuThapChuyenHoa = document.getElementById('dsVirusThuThapChuyenHoa');
+  dsVirusThuThapChuyenHoa.innerHTML = '';
+
+  if (virusThuThap.length === 0) {
+    dsVirusThuThapChuyenHoa.innerHTML = '<li>Không có virus nào được thu thập</li>';
+  } else {
+    virusThuThap.forEach(virus => {
+      const li = document.createElement('li');
+      li.textContent = virus;
+      li.dataset.virus = virus;
+
+      li.addEventListener('click', () => {
+        // Bỏ chọn tất cả trước
+        const allLi = dsVirusThuThapChuyenHoa.querySelectorAll('li');
+        allLi.forEach(item => item.classList.remove('selected'));
+
+        // Chỉ chọn phần tử đang click
+        li.classList.add('selected');
+      });
+
+      dsVirusThuThapChuyenHoa.appendChild(li);
+    });
+  }
+
+  document.getElementById('modal-chuyenhoa').classList.remove('hidden');
+  document.getElementById('modal-chuyenhoa').classList.add('show');
+});
+
+
+// Xử lý khi người dùng xác nhận chuyển hóa virus
+document.getElementById('confirmChuyenHoa').addEventListener('click', async () => {
+  const selectedLi = document.querySelector('#dsVirusThuThapChuyenHoa .selected');
+  if (!selectedLi) {
+    HienThiThongBao('Chưa chọn virus để chuyển hóa!', 'warning', 2);
+    document.getElementById('modal-chuyenhoa').classList.remove('show');
+    document.getElementById('modal-chuyenhoa').classList.add('hidden');
+    return;
+  }
+
+  const maVirus = selectedLi.dataset.virus;
+  const virusChon = (await layVirusXui(maVirus));
+  if (!virusChon) return;
+
+  // Tạo danh sách vaccin trắc nghiệm
+  const vaccinDung = virusChon.Vaccin;
+  const danhSachKhac = (await layTatCaVirusXui()).filter(v => v.MaVR !== maVirus);
+  const vaccinSai = danhSachKhac.map(v => v.Vaccin).filter((v, i, arr) => v !== vaccinDung && arr.indexOf(v) === i);
+
+  // Chọn ngẫu nhiên 3 vaccin sai
+  const vaccinNgauNhien = vaccinSai.sort(() => 0.5 - Math.random()).slice(0, 3);
+  const danhSachVaccin = [vaccinDung, ...vaccinNgauNhien].sort(() => 0.5 - Math.random());
+
+  // Hiển thị modal chọn vaccin
+  const vungVaccin = document.getElementById('danhSachVaccin');
+  vungVaccin.innerHTML = '';
+  danhSachVaccin.forEach((vac, index) => {
+    const div = document.createElement('div');
+    div.className = 'vaccin-lua-chon';
+    div.textContent = `${String.fromCharCode(65 + index)}. ${vac}`; // A., B., C., D.
+    div.dataset.vaccin = vac;
+    div.addEventListener('click', () => {
+      document.querySelectorAll('.vaccin-lua-chon').forEach(d => d.classList.remove('selected'));
+      div.classList.add('selected');
+    });
+    vungVaccin.appendChild(div);
+  });
+
+  document.getElementById('tinhHuongChuyenHoa').textContent = virusChon.TinhHuong;
+  document.getElementById('chonVaccinModal').classList.remove('hidden');
+  document.getElementById('chonVaccinModal').classList.add('show');
+
+  // Xử lý xác nhận chọn vaccin
+  document.getElementById('xacNhanLuaChonVaccin').onclick = async () => {
+    const vaccinChon = document.querySelector('.vaccin-lua-chon.selected');
+    if (!vaccinChon) {
+      HienThiThongBao('Bạn chưa chọn vaccin!', 'warning', 2);
+      return;
+    }
+
+    if (vaccinChon.dataset.vaccin !== vaccinDung) {
+      HienThiThongBao('Sai vaccin! Chuyển hóa thất bại.', 'error', 3);
+      document.getElementById('chonVaccinModal').classList.remove('show');
+      document.getElementById('chonVaccinModal').classList.add('hidden');
+      return;
+    }
+
+    const nguoiDung = await layNguoiDung(localStorage.getItem('username-luckyvicky'));
+    const virusThuThap = nguoiDung.VirusThuThap ? nguoiDung.VirusThuThap.split('-').filter(x => x) : [];
+    const virusChuyenHoa = nguoiDung.VirusChuyenHoa ? nguoiDung.VirusChuyenHoa.split('-').filter(x => x) : [];
+
+    const index = virusThuThap.indexOf(maVirus);
+    if (index > -1) virusThuThap.splice(index, 1);
+    virusChuyenHoa.unshift(maVirus);
+
+    nguoiDung.VirusThuThap = virusThuThap.join('-');
+    nguoiDung.VirusChuyenHoa = virusChuyenHoa.join('-');
+
+    await suaNguoiDung(nguoiDung);
+
+    document.getElementById('chonVaccinModal').classList.remove('show');
+    document.getElementById('chonVaccinModal').classList.add('hidden');
+    HienThiThongBao('Chuyển hóa virus thành công!', 'success', 2);
+
+    document.getElementById('modal-chuyenhoa').classList.remove('show');
+    document.getElementById('modal-chuyenhoa').classList.add('hidden');
+    // Hiển thị modal thông điệp Vicky sau khi chuyển hóa thành công
+    if (virusChon.ThongDiepVicky) {
+      document.getElementById('thongdiep-nguoigui').textContent = `Người gửi: ${virusChon.TenVirus || 'Virus Vô Danh'}`;
+      document.getElementById('thongdiep-nguoinhan').textContent = `Người nhận: ${nguoiDung.Ten || 'Chiến binh dũng cảm'}`;
+      document.getElementById('thongdiep-noidung').textContent = `"${virusChon.ThongDiepVicky}"`;
+
+      const modal = document.getElementById('modal-thongdiepVicky');
+      modal.classList.remove('hidden');
+      modal.classList.add('show');
+    }
+
+
+  };
+});
+
